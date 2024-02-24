@@ -16,6 +16,18 @@ const handleVoteAnecdote = ({votes,setVotes,selected}) => {
   setVotes(copy);
 };
 
+const MostVoteAnedocte = ({ copy, anecdotes }) => {
+  const maxVotes = Math.max(...copy);
+  const mostVotedIndex = copy.indexOf(maxVotes);
+
+  if (maxVotes > 0) {
+    return <p>{anecdotes[mostVotedIndex]}</p>;
+  } else {
+    return <p>No votes yet.</p>;
+  }
+};
+
+
 const App = () => {
   const anecdotes = [
     "If it hurts, do it more often.",
@@ -27,15 +39,20 @@ const App = () => {
     "Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.",
   ];
 
+  
+
   const [selected, setSelected] = useState(0);
   const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0));
 
   return (
     <div>
+     <h1>Anecdote of the day</h1> 
       <p>{anecdotes[selected]}</p>
       <p>has {votes[selected]} votes</p> 
       <Button handleClick={() => handleNextAnecdote(anecdotes, setSelected)} text="Next Anecdote" />
       <Button handleClick = {() => handleVoteAnecdote({votes,setVotes,selected})} text="Votes" />
+      <h1>Anecdote with most votes</h1>
+      <MostVoteAnedocte copy={votes} anecdotes={anecdotes}  />
     </div>
   );
 };
