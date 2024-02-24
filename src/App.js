@@ -10,6 +10,12 @@ const handleNextAnecdote = (anecdotes, setSelected) => {
 };
 
 
+const handleVoteAnecdote = ({votes,setVotes,selected}) => {
+  const copy = [...votes];
+  copy[selected] += 1;
+  setVotes(copy);
+};
+
 const App = () => {
   const anecdotes = [
     "If it hurts, do it more often.",
@@ -22,11 +28,14 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0));
 
   return (
     <div>
       <p>{anecdotes[selected]}</p>
+      <p>has {votes[selected]} votes</p> 
       <Button handleClick={() => handleNextAnecdote(anecdotes, setSelected)} text="Next Anecdote" />
+      <Button handleClick = {() => handleVoteAnecdote({votes,setVotes,selected})} text="Votes" />
     </div>
   );
 };
